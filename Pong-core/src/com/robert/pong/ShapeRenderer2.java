@@ -14,6 +14,11 @@ public class ShapeRenderer2 {
 		s = new ShapeRenderer();
 	}
 	
+	public void drawPong(Paddle p) {
+		
+		drawRect(p.getRectangle());
+	}
+	
 	public void drawRect(Rectangle r) {
 		
 		float x = r.getX();
