@@ -25,18 +25,18 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		Rectangle r = world.getFirstPong();
-		Rectangle r2 = world.getSecondPong();
+		Paddle r = world.getFirstPaddle();
+		Paddle r2 = world.getSecondPaddle();
 		Circle c = world.getBall();
 		
 		if(start)
 			world.updateBall();
 		
-		shape.drawRect(r);
-		shape.drawRect(r2);
+		shape.drawPong(r);
+		shape.drawPong(r2);
 		shape.drawCircle(c);
 		
 		handleInput();
