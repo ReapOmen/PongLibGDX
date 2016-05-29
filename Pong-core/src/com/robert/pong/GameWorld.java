@@ -1,17 +1,14 @@
 package com.robert.pong;
 
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameWorld {
 	
 	private Paddle firstPaddle, secondPaddle;
 	private int gameWidth, gameHeight;
-	private Circle ball;
-	private boolean started;
-	private Vector2 ballOffset;
+	private boolean start;
+	private Ball ball;
 	
 	public GameWorld(int width, int height) {
 		
@@ -21,9 +18,9 @@ public class GameWorld {
 		firstPaddle = new Paddle(gameWidth, gameHeight, Paddle.ONE);
 		secondPaddle = new Paddle(gameWidth, gameHeight, Paddle.TWO);
 		
-		ball = new Circle(gameWidth/2, gameHeight/2, 7);
+		ball = new Ball(gameWidth, gameHeight);
 		
-		started = false;
+		start = false;
 	}
 	
 	public Paddle getFirstPaddle() {
@@ -36,57 +33,58 @@ public class GameWorld {
 		return secondPaddle;
 	}
 	
-	public Circle getBall() {
+	public Ball getBall() {
 		
 		return ball;
 	}
 	
 	public void updateBall() {
 		
-		if(!started) {
+		if(start) {
 			
-			started = true;
-			ballOffset = new Vector2();
-			ballOffset.x = 2.5f;
-			ballOffset.y = 2.5f;
+			ball.update();
+			
+			checkWallCollision();
+			checkPaddleCollision(firstPaddle);
+			checkPaddleCollision(secondPaddle);
 		}
-		else {
-			
-			ball.x += ballOffset.x;
-			ball.y += ballOffset.y;
-			float x = ball.x;
-			float y = ball.y;
-			
-			if(x >= gameWidth - ball.radius || x <= ball.radius) {
-				started = false;
-				ball.setPosition(gameWidth/2, gameHeight/2);
-			}
+	}
 
+	private void checkWallCollision() {
+		
+		float y = ball.getPosition().y;
+		float rad = ball.getRadius();
+		
+		if(y + rad >= gameHeight || y - rad <= 0) {
 			
-			if(y >= gameHeight - ball.radius)
-				ballOffset.y = -ballOffset.y;
-			else
-				if(y <= ball.radius)
-					ballOffset.y = -ballOffset.y;
+			ball.setRotation(getWallRotation());
 			
-			if(Intersector.overlaps(ball, firstPaddle.getRectangle())) {
-				
-				if(ballOffset.y > 0.0)
-					ballOffset.rotate(-90);
-				else
-					ballOffset.rotate(90);
-			}
-			
-			if(Intersector.overlaps(ball, secondPaddle.getRectangle())) {
-	
-				if(ballOffset.y > 0.0)
-					ballOffset.rotate(90);
-				else
-					ballOffset.rotate(-90);
-			}
 		}
 	}
 	
+	private void checkPaddleCollision(Paddle p) {
+
+		if(Intersector.overlaps(ball.getCircle(), p.getRectangle())) {
+			
+			ball.setRotation(getPaddleRotation());
+		}	
+			
+	}
+	
+	private float getPaddleRotation() {
+		
+		Vector2 speed = ball.getSpeed();
+		float angle = Vector2.Y.angle(speed);
+		return -angle*2;
+	}
+	
+	private float getWallRotation() {
+		
+		Vector2 speed = ball.getSpeed();
+		float angle = Vector2.X.angle(speed);
+		return -angle*2;
+	}
+
 	public void moveFirstUp() {
 		
 		firstPaddle.moveUp();
@@ -105,6 +103,12 @@ public class GameWorld {
 	public void moveSecondDown() {
 		
 		secondPaddle.moveDown();
+	}
+	
+	public void start() {
+		
+		start = true;
+		ball.randomiseRotation();
 	}
 	
 }
