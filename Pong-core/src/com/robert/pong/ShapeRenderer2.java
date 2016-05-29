@@ -5,25 +5,45 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * Represents a ShapeRenderer that is used to draw objects of the game Pong.
+ * @author robert
+ *
+ */
 public class ShapeRenderer2 {
 
 	private ShapeRenderer s;
 	
+	/**
+	 * Creates a new ShapeRenderer2
+	 */
 	public ShapeRenderer2() {
 		
 		s = new ShapeRenderer();
 	}
 	
+	/**
+	 * Draws a paddle on the screen.
+	 * @param p the paddle to be drawn on screen
+	 */
 	public void drawPaddle(Paddle p) {
 		
 		drawRect(p.getRectangle());
 	}
 	
+	/**
+	 * Draws a ball on the screen.
+	 * @param b the ball to be drawn on screen
+	 */
 	public void drawBall(Ball b) {
 		
 		drawCircle(b.getCircle());
 	}
 	
+	/**
+	 * Draws a rectangle on the screen.
+	 * @param r the rectangle to be drawn on screen
+	 */
 	public void drawRect(Rectangle r) {
 		
 		float x = r.getX();
@@ -35,6 +55,10 @@ public class ShapeRenderer2 {
 		s.end();
 	}
 	
+	/**
+	 * Draws a circle on the screen.
+	 * @param c the circle to be drawn on screen
+	 */
 	public void drawCircle(Circle c) {
 		
 		float x = c.x;
