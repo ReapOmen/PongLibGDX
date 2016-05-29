@@ -1,7 +1,6 @@
 package com.robert.pong;
 
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
 
 public class InputHandler extends InputAdapter {
 	
@@ -15,7 +14,7 @@ public class InputHandler extends InputAdapter {
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		
-		world.updateBall();
+		world.start();
 		return true;
 	}
 }
