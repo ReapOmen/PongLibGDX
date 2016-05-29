@@ -21,7 +21,7 @@ public class Renderer {
 		world.updateBall();
 		sr.drawPaddle(world.getFirstPaddle());
 		sr.drawPaddle(world.getSecondPaddle());
-		sr.drawCircle(world.getBall());
+		sr.drawBall(world.getBall());
 	
 	}
 
