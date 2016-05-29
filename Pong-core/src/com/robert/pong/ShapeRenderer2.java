@@ -19,6 +19,11 @@ public class ShapeRenderer2 {
 		drawRect(p.getRectangle());
 	}
 	
+	public void drawBall(Ball b) {
+		
+		drawCircle(b.getCircle());
+	}
+	
 	public void drawRect(Rectangle r) {
 		
 		float x = r.getX();
