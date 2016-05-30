@@ -23,7 +23,8 @@ public class InputHandler extends InputAdapter {
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		
-		world.start();
+		if(!world.hasStarted())
+			world.start();
 		return true;
 	}
 }
